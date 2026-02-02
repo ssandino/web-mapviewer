@@ -9,7 +9,6 @@ import type { ShallowRef } from 'vue'
 
 import { fileProxyAPI } from '@swissgeo/api'
 import { registerProj4, WGS84 } from '@swissgeo/coordinates'
-import { LayerType } from '@swissgeo/layers'
 import proj4 from 'proj4'
 import { assertDefined } from 'support/utils'
 import { toValue } from 'vue'
@@ -669,7 +668,7 @@ describe('The Import File Tool', () => {
         cy.getPinia().then((pinia) => {
             const layersStore = useLayersStore(pinia)
             const kmlLayerCount = layersStore.activeLayers.filter(
-                (layer) => layer.type === LayerType.KML
+                (layer) => layer.type === 'KML'
             ).length
             cy.window()
                 .its('cesiumViewer')

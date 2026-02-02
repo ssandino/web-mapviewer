@@ -11,7 +11,6 @@ import { useLayerZIndexCalculation } from '@/modules/map/components/common/z-ind
 import OpenLayersAccuracyCircle from '@/modules/map/components/openlayers/OpenLayersAccuracyCircle.vue'
 import OpenLayersMarker from '@/modules/map/components/openlayers/OpenLayersMarker.vue'
 import OpenLayersVisionCone from '@/modules/map/components/openlayers/OpenLayersVisionCone.vue'
-import { OpenLayersMarkerStyles } from '@/modules/map/components/openlayers/utils/markerStyle'
 import useDeviceOrientation from '@/modules/map/components/openlayers/utils/useDeviceOrientation.composable.ts'
 import useGeolocationStore from '@/store/modules/geolocation'
 import usePositionStore from '@/store/modules/position'
@@ -108,7 +107,11 @@ function roundIfNumber(v: unknown, d: number): string {
 }
 
 function disableTrackingAndAutoRotation(): void {
-    if (isTracking.value && geolocationStore.position && geolocationStore.position !== positionStore.center) {
+    if (
+        isTracking.value &&
+        geolocationStore.position &&
+        geolocationStore.position !== positionStore.center
+    ) {
         // When the map has been dragged we disabled geolocation tracking to avoid to re-center the
         // map when the user want to have something else in the center. Also disabled the auto rotation
         // because auto rotation rotate the map using the position as center and it doesn't make sense
@@ -135,7 +138,7 @@ function disableTrackingAndAutoRotation(): void {
     <OpenLayersMarker
         v-if="geolocationPosition"
         :position="geolocationPosition"
-        :marker-style="OpenLayersMarkerStyles.Position"
+        marker-style="position"
         :z-index="zIndexGeolocation + 2"
     />
 </template>
