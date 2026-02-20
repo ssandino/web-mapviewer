@@ -52,6 +52,7 @@
             "@tailwindcss/oxide",
             "cypress",
             "sharp",
+            "unrs-resolver",
             "vue-demi"
         ],
         "patchedDependencies": {

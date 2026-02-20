@@ -25,6 +25,16 @@ catalog:
     '@mapbox/togeojson': ^0.16.2
     '@microsoft/api-extractor': ^7.55.2
     '@nuintun/qrcode': ^5.0.2
+    '@nuxt/devtools': ^3.1.1
+    '@nuxt/eslint-config': ^1.13.0
+    '@nuxt/icon': ^2.2.1
+    '@nuxt/kit': ^4.3.0
+    '@nuxt/module-builder': ^1.0.2
+    '@nuxt/schema': ^4.3.0
+    '@nuxt/test-utils': ^3.23.0
+    '@nuxt/ui': ^4.4.0
+    '@nuxtjs/i18n': ^10.2.1
+    '@pinia/nuxt': ^0.11.3
     '@pinia/testing': ^1.0.3
     '@popperjs/core': ^2.11.8
     '@prettier/plugin-xml': ^3.4.2
@@ -61,6 +71,7 @@ catalog:
     bootstrap: ^5.3.8
     cesium: ^1.137.0
     chai: ^6.2.2
+    changelogen: ^0.6.2
     chart.js: ^4.5.1
     chartjs-plugin-zoom: ^2.2.0
     cypress: ^15.9.0
@@ -80,7 +91,6 @@ catalog:
     eslint-plugin-perfectionist: ^5.4.0
     eslint-plugin-prettier: ^5.5.5
     eslint-plugin-vue: ^10.7.0
-    form-data: ^4.0.5
     geographiclib-geodesic: ^2.2.0
     geotiff: ^3.0.0
     git-describe: ^4.1.1
@@ -96,6 +106,7 @@ catalog:
     maplibre-gl: ^5.17.0
     mime-types: ^3.0.2
     mocha-junit-reporter: ^2.2.1
+    nuxt: ^4.3.0
     ol: ^10.7.0
     pako: ^2.1.0
     pinia: ^3.0.4
