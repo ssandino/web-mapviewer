@@ -4,9 +4,8 @@
  * This plugin:
  * 1. Finds chunks containing service worker registration code from the virtual:pwa-register module
  * 2. Replaces "./service-workers.js" with the versioned path (e.g., "./v1.59.0/service-workers.js")
- * 3. Injects scope configuration {scope:"/"} to ensure SW controls the entire origin
- * 4. Emits a validation file (sw-ready.json) to indicate successful configuration
- * 5. Warns if no SW registration pattern is found (validation failure)
+ * 3. Emits a validation file (sw-ready.json) to indicate successful configuration
+ * 4. Warns if no SW registration pattern is found (validation failure)
  */
 export default function versionServiceWorkerPath(appVersion, staging) {
     let swPatternFound = false
@@ -44,26 +43,9 @@ export default function versionServiceWorkerPath(appVersion, staging) {
                             /new\s+(\w+)\("\.\/service-workers\.js"/g,
                             `new $1("./${appVersion}/service-workers.js"`
                         )
-
-                        // Pattern 2: Also check for scope configuration and inject if needed
-                        // Look for the options object: new Workbox("path", {scope:"./", type:"classic"})
-                        // We need to ensure scope is set to "/" for root-level control
-                        const scopePattern = /new\s+(\w+)\("\.\/[^"]+",\s*\{([^}]*)\}/g
-
-                        chunk.code = chunk.code.replace(scopePattern, (match, constructor, opts) => {
-                            // Check if scope is already defined
-                            if (opts.includes('scope:')) {
-                                // Replace existing scope with "/"
-                                const newOpts = opts.replace(/scope:\s*"[^"]*"/, 'scope:"/"')
-                                return `new ${constructor}("./${appVersion}/service-workers.js",{${newOpts}}`
-                            } else {
-                                // Inject scope if not present
-                                return `new ${constructor}("./${appVersion}/service-workers.js",{scope:"/",${opts}}`
-                            }
-                        })
                     }
 
-                    // Pattern 3: Look for standalone string references to the SW path
+                    // Pattern 2: Look for standalone string references to the SW path
                     // (in case registration uses a different pattern)
                     if (chunk.code.includes('"./service-workers.js"')) {
                         // eslint-disable-next-line no-console

@@ -27,6 +27,10 @@ const { t } = useI18n()
  * Check if service worker versioning/configuration is valid by fetching the validation file
  */
 async function checkSwValidation() {
+    if (import.meta.env.DEV) {
+        return
+    }
+
     try {
         const response = await fetch(`${APP_VERSION}/sw-ready.json`, {
             cache: 'no-store',
@@ -42,6 +46,19 @@ async function checkSwValidation() {
                 messages: ['SW validation file not found - SW versioning may have failed'],
             })
             swValidationFailed.value = true
+            return
+        }
+
+        const contentType = response.headers.get('content-type') ?? ''
+        if (!contentType.includes('application/json')) {
+            log.warn({
+                title: 'OfflineReadinessStatus',
+                titleColor: LogPreDefinedColor.Sky,
+                messages: [
+                    'SW validation response is not JSON - SW versioning may not be active in this mode',
+                    contentType,
+                ],
+            })
             return
         }
 
@@ -102,6 +119,13 @@ function registerPeriodicSync(serviceWorkerUrl: string, registration: ServiceWor
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
     immediate: true,
+    onRegisterError(error) {
+        log.error({
+            title: 'OfflineReadinessStatus',
+            titleColor: LogPreDefinedColor.Sky,
+            messages: ['ServiceWorker registration failed', error],
+        })
+    },
     onRegisteredSW(serviceWorkerUrl, registration) {
         log.debug({
             title: 'OfflineReadinessStatus',
